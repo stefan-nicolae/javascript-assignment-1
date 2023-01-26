@@ -30,7 +30,11 @@ function gameRound() {
     errorMessage = "Write only rock, scissors or paper, try again!"
 
     computerSelection = computerPlay().toLowerCase()
-    playerSelection = prompt("Write Rock, Paper or Scissors").toLowerCase().replaceAll(" ", "")
+    playerSelection = prompt("Write Rock, Paper or Scissors")
+    if(!playerSelection) {
+        return gameRound()
+    }
+    playerSelection.toLowerCase().replaceAll(" ", "")
     
     console.log("We picked " + playerSelection)
     console.log("Computer picked " + computerSelection)
@@ -63,11 +67,12 @@ function game() {
         writeConclusion(roundResult)
         if(roundResult.includes("Win")) playerWinCounter++
     }
-    if(playerWinCounter >= 3) return "Player Won"
-    else return "Computer Won"
+    if(playerWinCounter >= 3) return "----PLAYER WON----"
+    else return "----COMPUTER WON----"
 }
 
 while(true) {
-    writeConclusion("WELCOME TO ROCK PAPER SCISSORS GAME!")
+    console.log("WELCOME TO ROCK PAPER SCISSORS GAME!")
+    console.log('  ------------------')
     console.log(game())
 }
