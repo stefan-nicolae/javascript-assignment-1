@@ -67,4 +67,7 @@ function game() {
     else return "Computer Won"
 }
 
-console.log(game())
+while(true) {
+    writeConclusion("WELCOME TO ROCK PAPER SCISSORS GAME!")
+    console.log(game())
+}
