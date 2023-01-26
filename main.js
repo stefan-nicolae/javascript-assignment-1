@@ -36,7 +36,7 @@ function gameRound() {
     }
     playerSelection.toLowerCase().replaceAll(" ", "")
     
-    console.log("We picked " + playerSelection)
+    console.log("You picked " + playerSelection)
     console.log("Computer picked " + computerSelection)
 
     if(playerSelection === computerSelection) {
@@ -67,7 +67,7 @@ function game() {
         writeConclusion(roundResult)
         if(roundResult.includes("Win")) playerWinCounter++
     }
-    if(playerWinCounter >= 3) return "----PLAYER WON----"
+    if(playerWinCounter >= 3) return "----YOU WON----"
     else return "----COMPUTER WON----"
 }
 
