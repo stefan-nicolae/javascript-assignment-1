@@ -31,17 +31,14 @@ function computerPlay() {
 }
 
 
-//take user input
 function getSelections() {
     let playerSelection = prompt(promptMessage)
     let computerSelection = computerPlay().toLowerCase()
 
-    //cancel
     if(playerSelection === null) {
         return "quit"
     } 
 
-    //empty ok
     if(!playerSelection) {
         writeConclusion(errorMessage)
         return getSelections()
