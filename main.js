@@ -1,6 +1,16 @@
+const winMessage = "You Win!",
+loseMessage = "You Lose!",
+drawMessage = "It's a draw, try again!",
+errorMessage = "Write only rock, scissors or paper, try again!",
+quitMessage = "Feel free to try again later by refreshing the page!",
+promptMessage = "Play Rock, Paper Scissors with the computer for 5 rounds.\n Please type in Rock, Paper or Scissors"
+
+let roundCounter = 1
+
+
 function writeConclusion(message) {
     console.log("    " + message)
-    console.log('  ------------------')
+    console.log('------------------')
 }
 
 function computerPlay() {
@@ -20,30 +30,37 @@ function computerPlay() {
     return result
 }
 
-function gameRound() {
-    let playerSelection, 
-    computerSelection
-    
-    const winMessage = "You Win!",
-    loseMessage = "You Lose!",
-    drawMessage = "It's a draw, try again!",
-    errorMessage = "Write only rock, scissors or paper, try again!"
 
-    computerSelection = computerPlay().toLowerCase()
-    playerSelection = prompt("Write Rock, Paper or Scissors")
+//take user input
+function getSelections() {
+    let playerSelection = prompt(promptMessage)
+    let computerSelection = computerPlay().toLowerCase()
+
+    //cancel
+    if(playerSelection === null) {
+        return "quit"
+    } 
+
+    //empty ok
     if(!playerSelection) {
-        return gameRound()
+        writeConclusion(errorMessage)
+        return getSelections()
     }
-    playerSelection.toLowerCase().replaceAll(" ", "")
-    
-    console.log("You picked " + playerSelection)
-    console.log("Computer picked " + computerSelection)
+
+    playerSelection = playerSelection.toLowerCase().replaceAll(" ", "")
+
+    console.log("> You picked " + playerSelection)
+    console.log("> Computer picked " + computerSelection)
 
     if(playerSelection === computerSelection) {
         writeConclusion(drawMessage)
-        return gameRound()
+        return getSelections()
     }
 
+    return gameRound(playerSelection, computerSelection)
+}
+
+function gameRound(playerSelection, computerSelection) {
     switch(playerSelection) {
         case "rock":
             if(computerSelection === "paper") return loseMessage 
@@ -56,23 +73,27 @@ function gameRound() {
             else return winMessage
         default: 
             writeConclusion(errorMessage)
-            return gameRound()
+            return getSelections()
     }
 }
 
 function game() {
     let playerWinCounter = 0
     for (let i = 0; i < 5; i++) {
-        const roundResult = gameRound()
+        console.log("Round " + roundCounter++)
+        const roundResult = getSelections()
+        if(roundResult === "quit") return quitMessage
         writeConclusion(roundResult)
         if(roundResult.includes("Win")) playerWinCounter++
     }
+    setTimeout(() => {
+        console.log(quitMessage)
+    }, 100)
     if(playerWinCounter >= 3) return "----YOU WON----"
     else return "----COMPUTER WON----"
 }
 
-while(true) {
-    console.log("WELCOME TO ROCK PAPER SCISSORS GAME!")
-    console.log('  ------------------')
-    console.log(game())
-}
+console.log("WELCOME TO ROCK PAPER SCISSORS GAME!")
+console.log('------------------')
+console.log(game())
+
